@@ -4,19 +4,32 @@
   "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "build": "webpack --mode production && rimraf ./build && npx tsc",
+    "start": "export JWT_SECRET=azerty && npm run build && node dist_server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/index.js",
+    "server": "export JWT_SECRET=azerty && nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Sandeep Raveesh",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.11",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/node": "^14.14.35",
     "babel-polyfill": "^6.26.0",
-    "express": "^4.16.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "puppeteer": "^8.0.0",
+    "random-word-fr": "^1.0.3",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "rimraf": "^3.0.2",
+    "short-uuid": "^4.1.0",
+    "socket.io": "^4.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

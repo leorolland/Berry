@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DCS Editor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreeChat</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
-
 <body>
-    <div id="root"></div>
+  <h1>Free chat</h1>
+  <h2>Rejoindre</h2>
+  <span id="join" class="btn">Let's Go !</span>
+  <h2>Récupérer votre compte</h2>
+  <p>Entrez votre code confidentiel pour accéder à votre compte : <input id="accountCode" type="text" placeholder="XXXXXXXX"> <span id="recover" class="btn">C'est partiii</span></p>
 </body>
+<footer>
+  <script>
+    const joinBtn = document.getElementById('join')
+    
+    const accountCode = document.getElementById('accountCode')
+    const recoverBtn = document.getElementById('recover')
 
+    joinBtn.addEventListener('click', () => {
+      window.location.href = `/createAccount`
+    })
+
+  
+
+  </script>
+</footer>
 </html>
