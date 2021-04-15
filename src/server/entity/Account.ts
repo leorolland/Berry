@@ -1,15 +1,29 @@
-import { Secret, sign } from "jsonwebtoken";
-import { Token } from "./Token";
+import { sign } from "jsonwebtoken";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Thread } from "./Thread";
+import { Token } from "../types/Token";
+import { Message } from "./Message";
 const randomWordFR = require('random-word-fr');
 
+@Entity()
 export class Account {
   
+  @PrimaryGeneratedColumn('increment')
   id: number
+
+  @Column()
   passphrase: string
+
+  @Column()
   lastActivity: number
 
-  constructor(id: number) {
-    this.id = id
+  @OneToMany(() => Thread, thread => thread.author)
+  threads!: Thread[]
+
+  @OneToMany(() => Message, message => message.author)
+  messages!: Message[]
+
+  constructor() {
     this.passphrase = this.generatePassphrase()
     this.lastActivity = new Date().getTime()
   }

@@ -1,6 +1,6 @@
 import { MessageDTO } from "./MessageDTO"
 
 export type ThreadDTO = {
-    id: string,
+    uuid: string,
     messages: MessageDTO[]
 }

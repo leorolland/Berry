@@ -2,13 +2,16 @@ import { Server } from "socket.io";
 import { CreateThreadDTO } from "./dto/CreateThreadDTO";
 import { getToken } from "./login/getToken";
 import { verifyToken } from "./login/verifyToken";
-import { Db } from "./types/Db";
-import { Thread } from "./types/Thread";
+import { Thread } from "./entity/Thread";
 import { Token } from "./types/Token";
+import { getRepository } from "typeorm";
+import { Account } from "./entity/Account";
 
-export function io(httpServer: any, db: Db) {
+export function io(httpServer: any) {
   const tokens: Map<string, Token> = new Map()
   const io = new Server(httpServer)
+  const threadRepository = getRepository(Thread);
+  const accountRepository = getRepository(Account)
 
   io.on('connection', socket => {
 
@@ -16,14 +19,14 @@ export function io(httpServer: any, db: Db) {
 
     socket.on('joinRoom', room => socket.join(room))
 
-    socket.on('createThread', (thread: CreateThreadDTO) => {
+    socket.on('createThread', async (thread: CreateThreadDTO) => {
       const token = getToken(tokens, socket)
       if (!token) return
-      const account = db.accounts.get(token.id)
+      const account = await accountRepository.findOne(token.id)
       if (!account) throw Error(`Account id ${token.id} not found in db`)
-      const t = new Thread(account, thread.message)
+      let t = Thread.construct(account, thread.message)
+      t = await threadRepository.save(t)
       io.to(thread.room).emit('newThread', t.getSummary())
-      db.threads.set(t.id, t)
     })
 
   })
