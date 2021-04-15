@@ -15,7 +15,7 @@ app.set('db', new Db());
 
 // Open a socket.io instance and save it as "io" in our express app
 // Then the io instance will be accessible using req.app.get('io')
-app.set('io', io(http, app.get('games')));
+app.set('io', io(http, app.get('db')));
 
 // Tell our app to use this router
 app.use(router);

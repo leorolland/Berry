@@ -1,3 +1,4 @@
+import { MessageDTO } from "../dto/MessageDTO"
 import { Account } from "./Account"
 
 export class Message {
@@ -12,6 +13,14 @@ export class Message {
     this.nickname = nickname
     this.date = new Date().getTime()
     this.message = msg
+  }
+
+  toDTO(): MessageDTO {
+    return {
+      date: this.date,
+      message: this.message,
+      nickname: this.nickname
+    }
   }
 
 }

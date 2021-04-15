@@ -31,6 +31,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
+  devtool: 'inline-source-map',
   devServer: {
     port: 3000,
     open: true,

@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import './app.css';
-import ReactImage from './react.png';
+import { io } from 'socket.io-client';
+import Cookies from 'js-cookie';
+import ThreadList from './threadlist/ThreadList';
 
 export default class App extends Component {
-  state = { username: null };
-
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+  constructor() {
+    super();
+    const s = io();
+    this.state = { socket: s };
+    s.emit('authenticate', Cookies.get('token'));
   }
 
   render() {
-    const { username } = this.state;
+    const { socket } = this.state;
     return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
+      <ThreadList socket={socket} channel="main" />
     );
   }
 }

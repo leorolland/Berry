@@ -1,5 +1,5 @@
 import { generate } from "short-uuid";
-import { JSDocAuthorTag } from "typescript";
+import { ThreadDTO } from "../dto/ThreadDTO";
 import { Account } from "./Account";
 import { Message } from "./Message";
 const randomWordFR = require('random-word-fr');
@@ -18,6 +18,14 @@ export class Thread {
     let nickname = randomWordFR()
     this.nicknames.set(author.id, nickname)
     this.messages = [ new Message(author, nickname, firstMessage) ]
+    console.debug(`Created thread from ${author.id} : ${firstMessage}`)
+  }
+
+  getSummary(): ThreadDTO {
+    return {
+      id: this.id,
+      messages: [ this.messages[0].toDTO() ]
+    }
   }
 
 }
