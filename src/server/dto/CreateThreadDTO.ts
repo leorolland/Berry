@@ -1,4 +1,4 @@
 export type CreateThreadDTO = {
-    room: string,
+    channel: string,
     message: string
 }

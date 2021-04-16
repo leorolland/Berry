@@ -14,7 +14,7 @@ async function main() {
     
     app.set('db', await createConnection({
         type: 'sqlite',
-        database: 'db.sql',
+        database: 'berry.db',
         synchronize: true,
         entities: [
             __dirname + "/entity/*.js"

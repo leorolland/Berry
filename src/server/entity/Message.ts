@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, getRepository, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { MessageDTO } from "../dto/MessageDTO"
 import { Account } from "./Account"
 import { Thread } from "./Thread"
@@ -12,8 +12,8 @@ export class Message {
   @ManyToOne(() => Account, account => account.messages)
   author: Account
 
-  @OneToMany(() => Thread, thread => thread.messages)
-  thread!: Thread
+  @ManyToOne(() => Thread, thread => thread.messages)
+  thread: Thread
 
   @Column()
   nickname: string
@@ -24,11 +24,14 @@ export class Message {
   @Column()
   message: string
 
-  constructor(author: Account, nickname: string, msg: string) {
-    this.author = author
-    this.nickname = nickname
-    this.date = new Date().getTime()
-    this.message = msg
+  static construct(author: Account, nickname: string, message: string): Promise<Message> {
+    let msg = new Message()
+    msg.author = author
+    msg.nickname = nickname
+    msg.date = new Date().getTime()
+    msg.message = message
+    const messageRepository = getRepository(Message)
+    return messageRepository.save(msg)
   }
 
   toDTO(): MessageDTO {

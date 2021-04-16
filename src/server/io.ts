@@ -24,9 +24,30 @@ export function io(httpServer: any) {
       if (!token) return
       const account = await accountRepository.findOne(token.id)
       if (!account) throw Error(`Account id ${token.id} not found in db`)
-      let t = Thread.construct(account, thread.message)
-      t = await threadRepository.save(t)
-      io.to(thread.room).emit('newThread', t.getSummary())
+      let t = await Thread.construct(account, thread.message, thread.channel)
+      //let updatedThread = await threadRepository.findOne(t.id, { relations: ["messages"] })
+      //if (!updatedThread) throw Error("Thread failed to create")
+      //io.to(thread.channel).emit('newThread', updatedThread.getSummary())
+    })
+
+    socket.on('getRecentThreads', async channel => {
+      const token = getToken(tokens, socket)
+      if (!token) return
+      let t = await threadRepository.find({ 
+        where: { 'channel': channel }, 
+        relations: ['messages'] 
+      })
+      if (!t) return
+      console.debug(t)
+      return socket.emit('updateThreads', {channel: channel, threads: t.map(t => t.getSummary())})
+    })
+
+    socket.on('getFullThread', async threadUuid => {
+      const token = getToken(tokens, socket)
+      if (!token) return
+      let t = await threadRepository.findOne({ uuid: threadUuid }, { relations: ["user"] })
+      if (!t) return
+      return t.toDTO()
     })
 
   })
