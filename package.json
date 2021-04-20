@@ -4,10 +4,10 @@
   "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "webpack --mode development && rimraf ./build && npx tsc",
+    "build": "npx webpack --mode development && npx rimraf ./build && npx tsc",
     "start": "export JWT_SECRET=azerty && npm run build && node dist_server/index.js",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "export JWT_SECRET=azerty && nodemon src/server/index.js",
+    "client": "npx webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "server": "export JWT_SECRET=azerty && npx nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Sandeep Raveesh",

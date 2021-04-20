@@ -5,3 +5,5 @@ dist
 yarn.lock
 dist_client
 dist_server
+berry.db
+package-lock.json
