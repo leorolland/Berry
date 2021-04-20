@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
+import Message from "./Message";
+import MessageInput from './MessageInput';
 
 export default class Thread extends Component {
+
   constructor(props) {
     super(props);
-    const room = `channel/${props.channel}`;
-    props.socket.emit('joinRoom', room);
-    props.socket.on('newThread', (thread) => {
-      this.setState(state => ({
-        threads: [...state.threads, thread]
-      }));
-    });
-    this.state = { threads: [] };
-
-    props.socket.emit('createThread', { room, message: 'hello world' });
+    props.socket.on('updateThread', threadDto => this.setState({ threadDto }))
+    props.socket.emit('getFullThread', props.uuid)
+    props.socket.emit('joinRoom', props.uuid)
+    this.state = { threadDto: null }
   }
 
   render() {
-    const { threads } = this.state;
-    console.log(threads);
-    const threadList = threads.map(t => <Thread key={t.id} thread={t} />);
+    const { threadDto } = this.state
+    if (threadDto == null) return <p>Chargement du thread...</p>
+    const messages = threadDto.messages.map(m => <Message key={m.date} message={m}/>)
     return (
-      <div>
-        threadList :
-        { threadList }
-      </div>
-    );
+      <>
+        <div onClick={() => this.props.back()}>Retour</div>
+        { messages }
+        <MessageInput socket={this.props.socket} thread={threadDto.uuid}/>
+      </>
+    )
   }
+
 }

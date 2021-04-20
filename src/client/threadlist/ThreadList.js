@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ThreadThumbnail from './ThreadThumbnail';
 
 export default class ThreadList extends Component {
+
   constructor(props) {
     super(props);
     props.socket.emit('joinRoom', props.channel);
@@ -25,8 +26,8 @@ export default class ThreadList extends Component {
 
   render() {
     const { threads } = this.state;
-    console.log(threads);
-    const threadList = threads.map(t => <ThreadThumbnail key={t.id} thread={t} />);
+    const openThread = this.props.openThread
+    const threadList = threads.map(t => <ThreadThumbnail key={t.uuid} thread={t} openThread={openThread}/>);
     return (
       <div>
         threadList :

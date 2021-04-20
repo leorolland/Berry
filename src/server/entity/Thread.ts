@@ -35,15 +35,16 @@ export class Thread {
     t.author = author    
     t.channel = channel
     t.nicknames = "{}"
-    t.messages = [ await t.addMessage(author, firstMessage) ]
+    t.messages = []
+    await t.addMessage(author, firstMessage)
     const threadRepository = getRepository(Thread)
-    console.debug(`Created thread from ${author.id} : ${firstMessage}`)
-    console.debug(t)
     return threadRepository.save(t)
   }
 
-  addMessage(author: Account, message: string): Promise<Message> {
-    return Message.construct(author, this.getNickame(author), message)
+  async addMessage(author: Account, message: string): Promise<Message> {
+    const newMsg = await Message.construct(author, this.getNickame(author), message)
+    this.messages.push(newMsg)
+    return newMsg
   }
 
   getNickame(author: Account): string {

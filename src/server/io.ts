@@ -6,6 +6,7 @@ import { Thread } from "./entity/Thread";
 import { Token } from "./types/Token";
 import { getRepository } from "typeorm";
 import { Account } from "./entity/Account";
+import { SendMessageDTO } from "./dto/SendMessageDTO";
 
 export function io(httpServer: any) {
   const tokens: Map<string, Token> = new Map()
@@ -15,7 +16,7 @@ export function io(httpServer: any) {
 
   io.on('connection', socket => {
 
-    socket.on('authenticate', token => { console.log(token); tokens.set(socket.id, verifyToken(token))})
+    socket.on('authenticate', token => { console.log("verif: ", verifyToken(token)) ; tokens.set(socket.id, verifyToken(token))} )
 
     socket.on('joinRoom', room => socket.join(room))
 
@@ -25,9 +26,9 @@ export function io(httpServer: any) {
       const account = await accountRepository.findOne(token.id)
       if (!account) throw Error(`Account id ${token.id} not found in db`)
       let t = await Thread.construct(account, thread.message, thread.channel)
-      //let updatedThread = await threadRepository.findOne(t.id, { relations: ["messages"] })
-      //if (!updatedThread) throw Error("Thread failed to create")
-      //io.to(thread.channel).emit('newThread', updatedThread.getSummary())
+      let updatedThread = await threadRepository.findOne(t.id, { relations: ["messages"] })
+      if (!updatedThread) throw Error("Thread failed to create")
+      io.to(thread.channel).emit('newThread', updatedThread.getSummary())
     })
 
     socket.on('getRecentThreads', async channel => {
@@ -38,16 +39,29 @@ export function io(httpServer: any) {
         relations: ['messages'] 
       })
       if (!t) return
-      console.debug(t)
       return socket.emit('updateThreads', {channel: channel, threads: t.map(t => t.getSummary())})
     })
 
     socket.on('getFullThread', async threadUuid => {
       const token = getToken(tokens, socket)
       if (!token) return
-      let t = await threadRepository.findOne({ uuid: threadUuid }, { relations: ["user"] })
+      let t = await threadRepository.findOne({ uuid: threadUuid }, { relations: ["messages"] })
       if (!t) return
-      return t.toDTO()
+      socket.emit('updateThread', t.toDTO())
+    })
+
+    socket.on('sendMessage', async (msg: SendMessageDTO) => {
+      const token = getToken(tokens, socket)
+      if (!token) return
+      const account = await accountRepository.findOne(token.id)
+      if (!account) throw Error(`Account id ${token.id} not found in db`)
+      let t = await threadRepository.findOne({ uuid: msg.thread }, { relations: ["messages"] })
+      if (!t) return
+      await t.addMessage(account, msg.message)
+      await threadRepository.save(t)
+      const dto = t.toDTO()
+      socket.emit('updateThread', dto)
+      io.to(t.uuid).emit('updateThread', dto)
     })
 
   })
