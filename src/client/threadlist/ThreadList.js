@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ThreadThumbnail from './ThreadThumbnail';
+import ThreadInput from './ThreadInput';
 
 export default class ThreadList extends Component {
 
@@ -20,8 +21,6 @@ export default class ThreadList extends Component {
       }));
     });
     this.state = { threads: [] };
-
-    props.socket.emit('createThread', { channel: props.channel, message: 'hello world' });
   }
 
   render() {
@@ -30,6 +29,7 @@ export default class ThreadList extends Component {
     const threadList = threads.map(t => <ThreadThumbnail key={t.uuid} thread={t} openThread={openThread}/>);
     return (
       <div>
+        <ThreadInput socket={this.props.socket}/>
         threadList :
         { threadList }
       </div>

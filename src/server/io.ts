@@ -21,6 +21,7 @@ export function io(httpServer: any) {
     socket.on('joinRoom', room => socket.join(room))
 
     socket.on('createThread', async (thread: CreateThreadDTO) => {
+      if (!thread || !thread.message || !thread.channel || thread.message.trim().length < 1 || thread.channel.trim().length < 2) return 
       const token = getToken(tokens, socket)
       if (!token) return
       const account = await accountRepository.findOne(token.id)
@@ -51,6 +52,7 @@ export function io(httpServer: any) {
     })
 
     socket.on('sendMessage', async (msg: SendMessageDTO) => {
+      if (!msg || !msg.message || !msg.thread || msg.message.trim().length < 1 || msg.thread.trim().length < 2) return 
       const token = getToken(tokens, socket)
       if (!token) return
       const account = await accountRepository.findOne(token.id)
