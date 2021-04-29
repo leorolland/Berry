@@ -29,14 +29,14 @@ export default class Flux extends React.Component {
           openedThread == null &&
           <>
             <h1>Flux</h1>
-            <ThreadList socket={this.props.socket} channel="main" openThread={this.openThread}/>
+            <ThreadList channel="main" openThread={this.openThread}/>
           </>
         }
         {
           openedThread != null &&
           <>
             <h1>Thread</h1>
-            <Thread socket={this.props.socket} uuid={openedThread} back={this.back}/>
+            <Thread uuid={openedThread} back={this.back}/>
           </>
         }
       </>

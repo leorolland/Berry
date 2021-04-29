@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SocketContext } from '../SocketContext';
 
 export default class MessageInput extends Component {
 
@@ -9,7 +10,8 @@ export default class MessageInput extends Component {
   }
 
   send(msg) {
-    this.props.socket.emit('sendMessage', {
+    const socket = this.context
+    socket.emit('sendMessage', {
       thread: this.props.thread,
       message: msg
     })
@@ -30,3 +32,5 @@ export default class MessageInput extends Component {
   }
 
 }
+
+MessageInput.contextType = SocketContext

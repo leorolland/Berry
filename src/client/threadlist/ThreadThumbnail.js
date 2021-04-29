@@ -7,12 +7,12 @@ export default function ThreadThumbnail(props) {
       onClick={() => openThread(thread.uuid)}
       className="topic">
       <div className="tags">{ thread.channel }</div>
-      <div class="topic-container">
-        <div class="text">
+      <div className="topic-container">
+        <div className="text">
           { thread.messages[0].message }
         </div>
-        <div class="arrow-container">
-          <i class="arrow right"></i>
+        <div className="arrow-container">
+          <i className="arrow right"></i>
         </div>
       </div>
     </div>

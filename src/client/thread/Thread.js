@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SocketContext } from '../SocketContext';
 import Message from "./Message";
 import MessageInput from './MessageInput';
 
@@ -6,10 +7,14 @@ export default class Thread extends Component {
 
   constructor(props) {
     super(props);
-    props.socket.on('updateThread', threadDto => this.setState({ threadDto }))
-    props.socket.emit('getFullThread', props.uuid)
-    props.socket.emit('joinRoom', props.uuid)
     this.state = { threadDto: null }
+  }
+
+  componentDidMount() {
+    const socket = this.context
+    socket.on('updateThread', threadDto => this.setState({ threadDto }))
+    socket.emit('getFullThread', this.props.uuid)
+    socket.emit('joinRoom', this.props.uuid)
   }
 
   render() {
@@ -20,9 +25,11 @@ export default class Thread extends Component {
       <>
         <div onClick={() => this.props.back()}>Retour</div>
         { messages }
-        <MessageInput socket={this.props.socket} thread={threadDto.uuid}/>
+        <MessageInput thread={threadDto.uuid}/>
       </>
     )
   }
 
 }
+
+Thread.contextType = SocketContext

@@ -3,6 +3,7 @@ import './app.css';
 import Flux from './Flux';
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
+import { SocketContext } from "./SocketContext";
 
 export default class App extends Component {
   constructor() {
@@ -19,7 +20,9 @@ export default class App extends Component {
     const { socket } = this.state;
     return (
       <>
-        <Flux socket={socket}/>
+        <SocketContext.Provider value={socket}>
+          <Flux/>
+        </SocketContext.Provider>
       </>
     );
   }

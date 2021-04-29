@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SocketContext } from "../SocketContext";
 
 export default class ThreadInput extends Component {
 
@@ -22,7 +23,7 @@ export default class ThreadInput extends Component {
       this.reset()
       return
     }
-    this.props.socket.emit('createThread', { channel, message });
+    this.context.emit('createThread', { channel, message });
   }
 
   reset() {
@@ -52,8 +53,10 @@ export default class ThreadInput extends Component {
         <h3>Créer un thread</h3>
         <input type="text" value={this.state.channel} onChange={this.onChannelChange} placeholder="main, animaux, rencontre, astuce, débat, ..."></input>
         <input type="text" value={this.state.message} onChange={this.onMessageChange} placeholder="Lancez une discussion..."></input>
-        <span class="btn" onClick={this.send}>Créer</span>
+        <span className="btn" onClick={this.send}>Créer</span>
       </>
     )
   }
 }
+
+ThreadInput.contextType = SocketContext
