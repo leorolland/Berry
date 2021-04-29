@@ -1,8 +1,70 @@
-h1 {
-  color: green;
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i');
+
+html {
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
 }
 
-body {
-  text-align: center;
-  margin: auto;
+h1 {
+  font-weight: 300;
+  font-size: 3em;
+  margin: 0;
+  padding: 50px 0 0 15px;
+}
+
+.topics {
+  background-color: #F9F9F9;
+  width: 100%;
+  padding-top: 20px;
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+.topic {
+  margin: 20px 15px 20px 15px;
+  transition: all 0.2s;
+}
+
+.topic-container {
+  display: flex;
+  font-weight: 100;
+  padding-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.topic-container .text {
+  width: 100%;
+  min-height: 3em;
+}
+
+.tags {
+  font-weight: 500;
+  text-shadow: 0 0 3px #a4a4a4;
+  cursor: pointer;
+}
+
+.arrow-container {
+  position: relative;
+  width: 60px;
+}
+
+.arrow {
+  top: 30%;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: solid lightgray;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 3px;
+  transition: all 0.2s;
+}
+
+.topic:hover .arrow {
+  transform: translatex(30px) scale(1,2) rotate(-45deg);
+}
+
+.right {
+  transform: scale(1,2) rotate(-45deg);
 }

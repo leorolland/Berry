@@ -26,13 +26,14 @@ export default class ThreadList extends Component {
   render() {
     const { threads } = this.state;
     const openThread = this.props.openThread
-    const threadList = threads.map(t => <ThreadThumbnail key={t.uuid} thread={t} openThread={openThread}/>);
+    const threadList = threads.map(t => <ThreadThumbnail key={t.uuid} thread={t} openThread={openThread} />);
     return (
-      <div>
-        <ThreadInput socket={this.props.socket}/>
-        threadList :
-        { threadList }
-      </div>
+      <>
+        <div className="topics">
+          {threadList}
+        </div>
+        <ThreadInput socket={this.props.socket} />
+      </>
     );
   }
 }
