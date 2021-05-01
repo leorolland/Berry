@@ -35,21 +35,22 @@ body {
   padding: 50px 0 0 15px;
   background-color: white;
   width: 100vw;
+}
+.header, .header h1 {
   transition: all 0.25s ease-out;
-  background-color: red;
 }
 .header-fixed {
   position: fixed;
   top: 0;
   z-index: 2;
-  background-color: blue;
+  background-color: white;
 }
 .header-atTop {
-  height: 20vh;
+  height: 15vh;
 }
 .header-notAtTop {
-  height: 10vh;
-  padding: 20px 0 0 15px;
+  height: 8vh;
+  padding: 10px 0 0 15px;
 }
 .header-atTop h1 {
   font-size: 3em;
