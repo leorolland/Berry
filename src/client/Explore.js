@@ -2,7 +2,7 @@ import React from 'react';
 import ThreadList from './threadlist/ThreadList'
 import Thread from "./thread/Thread";
 
-export default class Flux extends React.Component {
+export default class Explore extends React.Component {
 
   constructor(props) {
     super(props)
@@ -28,14 +28,12 @@ export default class Flux extends React.Component {
         {
           openedThread == null &&
           <>
-            <h1>Flux</h1>
             <ThreadList channel="main" openThread={this.openThread}/>
           </>
         }
         {
           openedThread != null &&
           <>
-            <h1>Thread</h1>
             <Thread uuid={openedThread} back={this.back}/>
           </>
         }

@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i");
 
 @keyframes fadein {
   from {
-      opacity:0;
+    opacity: 0;
   }
   to {
-      opacity:1;
+    opacity: 1;
   }
 }
 
-@keyframes Pop { 
+@keyframes Pop {
   0% {
     opacity: 0;
-    transform: scale(.4);
+    transform: scale(0.4);
   }
   100% {
     opacity: 1;
@@ -21,24 +21,54 @@
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: white;
+}
+
+body {
+  margin: 0;
+}
+
+/* HEADER */
+.header {
+  margin: 0;
+  padding: 50px 0 0 15px;
+  background-color: white;
+  width: 100vw;
+  transition: all 0.25s ease-out;
+  background-color: red;
+}
+.header-fixed {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  background-color: blue;
+}
+.header-atTop {
+  height: 20vh;
+}
+.header-notAtTop {
+  height: 10vh;
+  padding: 20px 0 0 15px;
+}
+.header-atTop h1 {
+  font-size: 3em;
+}
+.header-notAtTop h1 {
+  font-size: 2em;
 }
 
 h1 {
   animation: fadein 0.25s;
   font-weight: 300;
   font-size: 3em;
-  margin: 0;
-  padding: 50px 0 0 15px;
 }
 
 .topics {
-  background-color: #F9F9F9;
-  width: 100%;
+  background-color: #f9f9f9;
+  width: 100vw;
+  height: 200vh;
   padding-top: 20px;
-  height: 80vh;
-  overflow-y: scroll;
 }
 
 .topic {
@@ -48,14 +78,27 @@ h1 {
   animation-fill-mode: both;
 }
 
-.topics .topic:nth-child(1) { animation-delay: .02s }
-.topics .topic:nth-child(2) { animation-delay: .04s }
-.topics .topic:nth-child(3) { animation-delay: .08s }
-.topics .topic:nth-child(4) { animation-delay: .10s }
-.topics .topic:nth-child(5) { animation-delay: .12s }
-.topics .topic:nth-child(6) { animation-delay: .14s }
-.topics .topic:nth-child(7) { animation-delay: .16s }
-
+.topics .topic:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.topics .topic:nth-child(2) {
+  animation-delay: 0.04s;
+}
+.topics .topic:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.topics .topic:nth-child(4) {
+  animation-delay: 0.1s;
+}
+.topics .topic:nth-child(5) {
+  animation-delay: 0.12s;
+}
+.topics .topic:nth-child(6) {
+  animation-delay: 0.14s;
+}
+.topics .topic:nth-child(7) {
+  animation-delay: 0.16s;
+}
 
 .topic-container {
   display: flex;
@@ -94,9 +137,26 @@ h1 {
 }
 
 .topic:hover .arrow {
-  transform: translatex(30px) scale(1,2) rotate(-45deg);
+  transform: translatex(30px) scale(1, 2) rotate(-45deg);
 }
 
 .right {
-  transform: scale(1,2) rotate(-45deg);
+  transform: scale(1, 2) rotate(-45deg);
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  height: 40px;
+  padding-top: 18px;
+  z-index: 2;
+  background-color: white;
+}
+
+.bottomBar > div {
+  font-size: 1.3em;
+  color: #000000;
 }
