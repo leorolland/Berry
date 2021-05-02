@@ -30,8 +30,8 @@ export default class ThreadList extends Component {
 
   render() {
     const { threads } = this.state;
-    const openThread = this.props.openThread
-    const threadList = threads.map(t => <ThreadThumbnail key={t.uuid} thread={t} openThread={openThread} />);
+    const { openThread, listKey } = this.props
+    const threadList = threads.map(t => <ThreadThumbnail key={listKey + t.uuid} thread={t} openThread={openThread} />);
     return (
       <>
         <div className="topics">

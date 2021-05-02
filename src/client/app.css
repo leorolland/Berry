@@ -171,3 +171,13 @@ h1 {
   width: 50%;
   animation: Pop 0.25s;
 }
+
+/* Pages */
+.page {
+  transform: translateX(-100%);
+  transition: all 1s ease;
+}
+
+.page-opened {
+  transform: translateX(0);
+}

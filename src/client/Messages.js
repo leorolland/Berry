@@ -2,7 +2,7 @@ import React from 'react';
 import ThreadList from './threadlist/ThreadList'
 import Thread from "./thread/Thread";
 
-export default class Explore extends React.Component {
+export default class Messages extends React.Component {
 
   constructor(props) {
     super(props)
@@ -28,7 +28,8 @@ export default class Explore extends React.Component {
         {
           openedThread == null &&
           <>
-            <ThreadList listKey="exploreList" channel="main" openThread={this.openThread} />
+            My messages :
+            <ThreadList listKey="messagesList" channel="me" openThread={this.openThread} />
           </>
         }
         {

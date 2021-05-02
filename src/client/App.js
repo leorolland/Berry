@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { SocketContext } from "./context/SocketContext";
 import { NavigationContext } from "./context/NavigationContext";
 import { BottomBar } from "./BottomBar";
+import Messages from "./Messages";
 
 export default class App extends Component {
 
@@ -36,14 +37,19 @@ export default class App extends Component {
 
   render() {
     const { socket, navigation } = this.state;
+    const { currentPage } = navigation
     return (
       <>
         <SocketContext.Provider value={socket}>
           <NavigationContext.Provider value={navigation}>
-            <Header title="Explore" />
-            {navigation.currentPage}
-
-            <Explore />
+            <div className={currentPage == "explore" ? 'page page-opened' : 'page'}>
+              <Header title="Explore" />
+              <Explore />
+            </div>
+            <div className={currentPage == "messages" ? 'page page-opened' : 'page'}>
+              <Header title="Messages" />
+              <Messages />
+            </div>
             <BottomBar></BottomBar>
           </NavigationContext.Provider>
         </SocketContext.Provider>
