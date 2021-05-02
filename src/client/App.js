@@ -4,14 +4,30 @@ import Explore from './Explore';
 import Header from './Header'
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
-import { SocketContext } from "./SocketContext";
-import BottomBar from "./BottomBar";
+import { SocketContext } from "./context/SocketContext";
+import { NavigationContext } from "./context/NavigationContext";
+import { BottomBar } from "./BottomBar";
 
 export default class App extends Component {
+
   constructor() {
     super();
-    const s = io();
-    this.state = { socket: s };
+    this.changeCurrentPage = newPage => {
+      this.setState({
+        navigation: {
+          currentPage: newPage,
+          changeCurrentPage: this.changeCurrentPage
+        }
+      })
+    }
+    const s = io()
+    this.state = {
+      socket: s,
+      navigation: {
+        currentPage: "explore",
+        changeCurrentPage: this.changeCurrentPage
+      }
+    };
     s.emit('authenticate', Cookies.get('token'));
     s.on('notAuthenticated', () => {
       s.emit('authenticate', Cookies.get('token'));
@@ -19,13 +35,17 @@ export default class App extends Component {
   }
 
   render() {
-    const { socket } = this.state;
+    const { socket, navigation } = this.state;
     return (
       <>
         <SocketContext.Provider value={socket}>
-          <Header title="Explore"/>
-          <Explore/>
-          <BottomBar></BottomBar>
+          <NavigationContext.Provider value={navigation}>
+            <Header title="Explore" />
+            {navigation.currentPage}
+
+            <Explore />
+            <BottomBar></BottomBar>
+          </NavigationContext.Provider>
         </SocketContext.Provider>
       </>
     );

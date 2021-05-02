@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SocketContext } from '../SocketContext';
+import { SocketContext } from '../context/SocketContext';
 
 export default class MessageInput extends Component {
 

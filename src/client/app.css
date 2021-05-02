@@ -27,6 +27,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 /* HEADER */
@@ -36,7 +37,8 @@ body {
   background-color: white;
   width: 100vw;
 }
-.header, .header h1 {
+.header,
+.header h1 {
   transition: all 0.25s ease-out;
 }
 .header-fixed {
@@ -145,19 +147,27 @@ h1 {
   transform: scale(1, 2) rotate(-45deg);
 }
 
+/* BottomBar */
 .bottomBar {
   position: fixed;
   bottom: 0;
   width: 100vw;
   display: flex;
   justify-content: space-evenly;
-  height: 40px;
-  padding-top: 18px;
+  height: 55px;
   z-index: 2;
   background-color: white;
 }
-
 .bottomBar > div {
+  padding-top: 18px;
   font-size: 1.3em;
   color: #000000;
+  width: 100%;
+  text-align: center;
+}
+.bottomBar hr {
+  border-top: 2px solid #000000;
+  margin-top: 6px;
+  width: 50%;
+  animation: Pop 0.25s;
 }

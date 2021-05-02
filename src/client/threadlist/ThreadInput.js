@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SocketContext } from "../SocketContext";
+import { SocketContext } from "../context/SocketContext";
 
 export default class ThreadInput extends Component {
 
@@ -10,10 +10,10 @@ export default class ThreadInput extends Component {
       message: '',
       invalidInput: false
     }
-    this.send             = this.send.bind(this)
-    this.reset            = this.reset.bind(this)
-    this.onChannelChange  = this.onChannelChange.bind(this)
-    this.onMessageChange  = this.onMessageChange.bind(this)
+    this.send = this.send.bind(this)
+    this.reset = this.reset.bind(this)
+    this.onChannelChange = this.onChannelChange.bind(this)
+    this.onMessageChange = this.onMessageChange.bind(this)
   }
 
   send() {
@@ -47,7 +47,7 @@ export default class ThreadInput extends Component {
     return (
       <>
         {
-          invalidInput && 
+          invalidInput &&
           <p>Le canal doit contenir au moins 2 caractères et le message 1 caractère</p>
         }
         <h3>Créer un thread</h3>
