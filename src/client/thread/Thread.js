@@ -17,6 +17,11 @@ export default class Thread extends Component {
     socket.emit('joinRoom', this.props.uuid)
   }
 
+  componentWillUnmount() {
+    const socket = this.context
+    socket.emit('leaveRoom', this.props.uuid)
+  }
+
   render() {
     const { threadDto } = this.state
     if (threadDto == null) return <p>Chargement du thread...</p>

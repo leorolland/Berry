@@ -28,6 +28,11 @@ export default class ThreadList extends Component {
     });
   }
 
+  componentWillUnmount() {
+    const socket = this.context
+    socket.emit('leaveRoom', this.props.channel)
+  }
+
   render() {
     const { threads } = this.state;
     const { openThread, listKey } = this.props

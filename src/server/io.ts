@@ -20,6 +20,8 @@ export function io(httpServer: any) {
 
     socket.on('joinRoom', room => socket.join(room))
 
+    socket.on('leaveRoom', room => {console.log("someone leaved", socket.rooms); socket.leave(room)})
+
     socket.on('createThread', async (thread: CreateThreadDTO) => {
       if (!thread || !thread.message || !thread.channel || thread.message.trim().length < 1 || thread.channel.trim().length < 2) return 
       const token = getToken(tokens, socket)
