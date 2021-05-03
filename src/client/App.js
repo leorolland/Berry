@@ -14,25 +14,54 @@ export default class App extends Component {
   constructor() {
     super();
     this.changeCurrentPage = newPage => {
-      this.setState({
+      const y = window.scrollY
+      this.setState(prevState => ({
         navigation: {
-          currentPage: newPage,
-          changeCurrentPage: this.changeCurrentPage
+          ...prevState.navigation,
+          scrolls: {
+            ...prevState.navigation.scrolls,
+            [prevState.navigation.currentPage]: y
+          },
+          currentPage: newPage
         }
-      })
+      }))
+      window.scrollTo(0, this.state.navigation.scrolls[newPage]);
     }
     const s = io()
     this.state = {
       socket: s,
       navigation: {
         currentPage: "explore",
-        changeCurrentPage: this.changeCurrentPage
+        changeCurrentPage: this.changeCurrentPage,
+        scrolls: {
+          explore: 0,
+          messages: 0,
+          profile: 0
+        },
       }
     };
     s.emit('authenticate', Cookies.get('token'));
     s.on('notAuthenticated', () => {
       s.emit('authenticate', Cookies.get('token'));
     })
+    this.getXOffset = this.getXOffset.bind(this)
+  }
+
+  getXOffset(page) {
+    const { currentPage } = this.state.navigation
+    if (currentPage == page)
+      return "0%"
+    switch (page) {
+      case "explore":
+        return "-100%"
+      case "messages":
+        if (currentPage == "explore")
+          return "+100%"
+        else
+          return "-100%"
+      case "profile":
+        return "+100%"
+    }
   }
 
   render() {
@@ -42,12 +71,11 @@ export default class App extends Component {
       <>
         <SocketContext.Provider value={socket}>
           <NavigationContext.Provider value={navigation}>
-            <div className={currentPage == "explore" ? 'page page-opened' : 'page'}>
-              <Header title="Explore" />
+            <Header title={currentPage} />
+            <div className='page' style={{ transform: `translateX(${this.getXOffset('explore')})` }}>
               <Explore />
             </div>
-            <div className={currentPage == "messages" ? 'page page-opened' : 'page'}>
-              <Header title="Messages" />
+            <div className='page' style={{ transform: `translateX(${this.getXOffset('messages')})` }}>
               <Messages />
             </div>
             <BottomBar></BottomBar>

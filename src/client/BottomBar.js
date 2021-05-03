@@ -9,16 +9,16 @@ export function BottomBar() {
       <NavigationContext.Consumer>
         {({ currentPage, changeCurrentPage }) => (
           <div className="bottomBar">
-            <div onClick={() => changeCurrentPage('explore')}>
+            <div onMouseDown={() => changeCurrentPage('explore')}>
               <FontAwesomeIcon icon={faCompass} />
               {currentPage == 'explore' && <hr />}
             </div>
-            <div onClick={() => changeCurrentPage('messages')}>
+            <div onMouseDown={() => changeCurrentPage('messages')}>
               <FontAwesomeIcon icon={faComments} />
               {currentPage == 'messages' && <hr />}
 
             </div>
-            <div onClick={() => changeCurrentPage('profile')}>
+            <div onMouseDown={() => changeCurrentPage('profile')}>
               <FontAwesomeIcon icon={faUser} />
               {currentPage == 'profile' && <hr />}
             </div>
