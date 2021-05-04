@@ -39,10 +39,10 @@ export function io(httpServer: any) {
       if (!token) return
       let t = await threadRepository.find({ 
         where: { 'channel': channel }, 
-        relations: ['messages'] 
+        relations: ['messages'],
       })
       if (!t) return
-      return socket.emit('updateThreads', {channel: channel, threads: t.map(t => t.getSummary())})
+      return socket.emit('updateThreads', {channel: channel, threads: t.reverse().map(t => t.getSummary())})
     })
 
     socket.on('getFullThread', async threadUuid => {

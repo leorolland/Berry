@@ -23,11 +23,11 @@
 html {
   font-family: "Roboto", sans-serif;
   background-color: white;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
 }
 
 /* HEADER */
@@ -39,7 +39,7 @@ body {
 }
 .header,
 .header h1 {
-  transition: all 0.25s ease-out;
+  transition: all 0.15s ease-out;
 }
 .header-fixed {
   position: fixed;
@@ -67,6 +67,7 @@ h1 {
   font-size: 3em;
 }
 
+/* Topics */
 .topics {
   background-color: #f9f9f9;
   width: 100vw;
@@ -119,6 +120,14 @@ h1 {
   font-weight: 500;
   text-shadow: 0 0 3px #a4a4a4;
   cursor: pointer;
+  display: inline-block;
+}
+
+.date {
+  color: #989898;
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.9em;
 }
 
 .arrow-container {

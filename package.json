@@ -33,6 +33,7 @@
     "random-word-fr": "^1.0.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-time-ago": "^6.2.2",
     "rimraf": "^3.0.2",
     "short-uuid": "^4.1.0",
     "socket.io": "^4.0.0",
