@@ -67,15 +67,17 @@ export default class App extends Component {
   render() {
     const { socket, navigation } = this.state;
     const { currentPage } = navigation
+    const transformExplore = currentPage == "explore" ? 'none' : `translateX(${this.getXOffset('explore')})`
+    const transformMessages = currentPage == "messages" ? 'none' : `translateX(${this.getXOffset('messages')})`
     return (
       <>
         <SocketContext.Provider value={socket}>
           <NavigationContext.Provider value={navigation}>
             <Header title={currentPage} />
-            <div className='page' style={{ transform: `translateX(${this.getXOffset('explore')})` }}>
+            <div className='page' style={{ transform: transformExplore }}>
               <Explore />
             </div>
-            <div className='page' style={{ transform: `translateX(${this.getXOffset('messages')})` }}>
+            <div className='page' style={{ transform: transformMessages }}>
               <Messages />
             </div>
             <BottomBar></BottomBar>

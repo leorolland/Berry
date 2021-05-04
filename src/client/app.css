@@ -70,7 +70,6 @@ h1 {
 .topics {
   background-color: #f9f9f9;
   width: 100vw;
-  height: 200vh;
   padding-top: 20px;
 }
 
@@ -177,6 +176,16 @@ h1 {
   transition: all 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
   position: absolute;
 }
+.fullScreen {
+  position: fixed;
+  height: 100vh;
+  z-index: 3;
+  padding: 30px;
+  top: 0;
+  background-color: white;
+  width: 100vw;
+  box-sizing: border-box;
+}
 
 /* Create Thread */
 .createThread {
@@ -195,5 +204,39 @@ h1 {
   transform: translateX(-50%);
   box-shadow: 0px 2px 13px 0px #00000012;
   font-weight: 100;
-  cursor: ;
+  cursor: pointer;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  background-color: lightgrey;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-confirm {
+  background-color: #4e4e4e;
+  color: white;
+}
+.rightAlignedItems {
+  text-align: right;
+}
+.rightAlignedItems .btn {
+  margin-left: 10px;
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #e2e2e2;
+  margin-bottom: 1em;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* fit parent width */
+}
+textarea {
+  height: 8em;
 }

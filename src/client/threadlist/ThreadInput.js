@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { SocketContext } from "../context/SocketContext";
+import { Button } from "../tools/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class ThreadInput extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      channel: '',
+      channel: props.channel,
       message: '',
       invalidInput: false
     }
@@ -20,15 +23,17 @@ export default class ThreadInput extends Component {
     const channel = this.state.channel.trim()
     const message = this.state.message.trim()
     if (channel.length < 2 || message.length < 1) {
-      this.reset()
+      this.setState({ invalidInput: true })
       return
     }
+    this.reset()
     this.context.emit('createThread', { channel, message });
+    this.props.back()
   }
 
   reset() {
     this.setState({
-      channel: '',
+      channel: this.props.channel,
       message: '',
       invalidInput: false
     })
@@ -45,16 +50,25 @@ export default class ThreadInput extends Component {
   render() {
     const { invalidInput } = this.state
     return (
-      <>
+      <div className="fullScreen">
+        <h2>Créer un thread</h2>
+        <input type="text" value={this.state.channel} onChange={this.onChannelChange} placeholder="main, animaux, rencontre, astuce, débat, ..."></input>
+        <div className="fullHeightTextarea">
+          <textarea value={this.state.message} onChange={this.onMessageChange} placeholder="Lancez une discussion..."></textarea>
+        </div>
         {
           invalidInput &&
           <p>Le canal doit contenir au moins 2 caractères et le message 1 caractère</p>
         }
-        <h3>Créer un thread</h3>
-        <input type="text" value={this.state.channel} onChange={this.onChannelChange} placeholder="main, animaux, rencontre, astuce, débat, ..."></input>
-        <input type="text" value={this.state.message} onChange={this.onMessageChange} placeholder="Lancez une discussion..."></input>
-        <span className="btn" onClick={this.send}>Créer</span>
-      </>
+        <div className="rightAlignedItems">
+          <Button onClick={this.props.back} addClasses="btn-wide">
+            <FontAwesomeIcon icon={faArrowLeft} /> Retour
+          </Button>
+          <Button onClick={this.send} addClasses="btn-wide btn-confirm">
+            Créer
+          </Button>
+        </div>
+      </div>
     )
   }
 }

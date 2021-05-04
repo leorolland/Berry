@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ThreadThumbnail from './ThreadThumbnail';
-import ThreadInput from './ThreadInput';
 import { SocketContext } from '../context/SocketContext';
 
 export default class ThreadList extends Component {
@@ -42,7 +41,6 @@ export default class ThreadList extends Component {
         <div className="topics">
           {threadList}
         </div>
-        <ThreadInput />
       </>
     );
   }

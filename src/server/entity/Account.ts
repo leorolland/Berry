@@ -38,7 +38,7 @@ export class Account {
 
   generateToken(): string {
     const token: Token = { id: this.id }
-    return sign(token, process.env.JWT_SECRET as string, { expiresIn: '1h', algorithm: 'HS256' })
+    return sign(token, process.env.JWT_SECRET as string, { algorithm: 'HS256' })
   }
 
 }
